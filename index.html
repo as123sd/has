@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti"></script>
+    <title>Flor para Suzett</title>
+</head>
+<body>
+
+    <header onclick="headerClicked()">
+        <h1>Para mi amiga Suzett, ¡por favor ya deja los doramas!</h1>
+    </header>
+    <p id="new-message" class="hidden">¡Suzett, mi amiga fria de frias!</p>
+    <main>
+        <div class="flower" onclick="flowerClicked()">
+            <img src="img/1.jpg" alt="Flor Amarilla" class="flower-image">
+        </div>
+        <video id="hidden-video" class="hidden-video" >
+            <source src="musica/ssstwitter.com_1719832911731 (1).mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>   
+    </main>
+    <button id="music-toggle">Reproducir Música</button>
+    <footer>
+        <p>¡Ni idea quién es ese de ahí, espero que sea coreano :D!</p>
+        <p>Pero, ey!! hay confeti...! dale click a la imagen </p>
+    </footer>
+    <button id="play-music-button" class="hidden">Reproducir Video</button>
+
+    <audio id="background-music" loop>
+        <source src="musica/Mickey Mouse.mp4" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+
+    <script>
+        const music = document.getElementById('background-music');
+        const button = document.getElementById('music-toggle');
+        const videoButton = document.getElementById('play-music-button'); // Mueve la declaración aquí
+    
+        button.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                button.textContent = 'Pausar Música';
+            } else {
+                music.pause();
+                button.textContent = 'Reproducir Música';
+            }
+        });
+    
+        function flowerClicked() {
+            const flowerImage = document.querySelector('.flower-image');
+            flowerImage.classList.add('clicked');
+            setTimeout(() => {
+                flowerImage.classList.remove('clicked');
+            }, 300);
+    
+            // Generar confeti
+            for (let i = 0; i < 100; i++) {
+                confetti({
+                    particleCount: 1,
+                    spread: 30,
+                    origin: {
+                        x: Math.random(),
+                        y: Math.random() * 0.6
+                    },
+                    angle: Math.random() * 360,
+                    colors: ['#FF5733', '#28B463', '#3498DB', '#F1C40F', '#E91E63']
+                });
+            }
+    
+            // Efecto de explosión
+            document.body.classList.add('explosion');
+            setTimeout(() => {
+                document.body.classList.remove('explosion');
+            }, 1000);
+        }
+    
+        function headerClicked() {
+    const hiddenVideo = document.getElementById('hidden-video');
+    const flowerImage = document.querySelector('.flower');
+    const newMessage = document.getElementById('new-message'); // Asegúrate de que el párrafo tenga este ID
+
+    // Ocultar la flor
+    flowerImage.style.display = 'none';
+    
+    // Mostrar el video
+    hiddenVideo.style.display = 'block';
+    
+    // Mostrar el botón de reproducción de video
+    videoButton.classList.remove('hidden');
+    
+    // Mostrar el nuevo párrafo
+    newMessage.classList.remove('hidden');
+
+    // Hacer que el video desaparezca después de 5 segundos
+    setTimeout(() => {
+        hiddenVideo.style.display = 'none';
+        flowerImage.style.display = 'flex'; // Volver a mostrar la flor
+            newMessage.classList.add('hidden');
+
+    }, 5000); // El video se muestra durante 5 segundos
+}
+
+        document.getElementById('play-music-button').addEventListener('click', function() {
+            const video = document.getElementById('hidden-video');
+            const button = this;
+    
+            if (video.paused) {
+                video.muted = false; // Desmutear el video
+                video.play();
+                button.innerText = 'Pausar Música';
+            } else {
+                video.pause();
+                video.muted = true; // Mutear el video
+                button.innerText = 'Reproducir Música';
+                alert('Eso es todo ahora sé feliz'); // Mensaje al pausar
+            }
+        });
+
+        
+    </script>
+</body>
+</html>
